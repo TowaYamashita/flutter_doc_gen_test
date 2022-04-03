@@ -35,7 +35,7 @@ jobs:
         set -xe
         flutter pub get
         flutter pub global activate dartdoc
-        cd .wiki | grep -v -E '.git' | xargs rm -r | cd ../
+        cd .wiki | grep -v -E '.git' | xargs --no-run-if-empty rm -rf | cd ../
         dartdoc lib/ --output .wiki/ --format md && mv .wiki/index.md .wiki/Home.md
 
     - name: Configure the GitHub wiki identity
