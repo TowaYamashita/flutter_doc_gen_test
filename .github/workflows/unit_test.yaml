@@ -25,6 +25,12 @@ jobs:
         ref: master
         path: .wiki
 
+    # - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '2.10.4'
+        channel: 'stable'
+
     - name: Generate the Wiki Page
       run: |
         flutter pub get
