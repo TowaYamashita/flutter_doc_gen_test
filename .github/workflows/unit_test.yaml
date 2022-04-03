@@ -2,7 +2,7 @@ name: "Update Wiki"
 
 on:
   push:
-    branches: [ main , synchronize]
+    branches: [ main ]
 
 jobs:
   build:
@@ -11,8 +11,8 @@ jobs:
     timeout-minutes: 5
 
     steps:
-    # - name: Checkout the main repository
-    #   uses: actions/checkout@v2
+    - name: Checkout the main repository
+      uses: actions/checkout@v2
     #   with:
     #     persist-credentials: false
 
@@ -28,6 +28,7 @@ jobs:
       with:
         flutter-version: '2.10.4'
         channel: 'stable'
+
     - name: Generate the Wiki Page
       run: |
         flutter pub get
@@ -41,6 +42,7 @@ jobs:
         set -xe
         git config user.name  "[bot] ${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+    
     - name: Update the wiki page
       working-directory: .wiki
       # --allow-empty may be good enough for almost all the situations,
