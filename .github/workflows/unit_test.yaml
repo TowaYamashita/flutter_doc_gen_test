@@ -34,7 +34,8 @@ jobs:
       run: |
         flutter pub get
         flutter pub global activate dartdoc
-        rm -rf .wiki && dartdoc lib/ --output .wiki/ --format md && mv .wiki/index.md .wiki/Home.md
+        ls .wiki | grep -v -E '.git' | xargs rm -r
+        dartdoc lib/ --output .wiki/ --format md && mv .wiki/index.md .wiki/Home.md
 
     - name: Configure the GitHub wiki identity
       working-directory: .wiki
