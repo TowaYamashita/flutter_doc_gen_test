@@ -53,4 +53,4 @@ jobs:
         set -xe
         git add .
         git commit --allow-empty -m "update the wiki page by bot (${GITHUB_WORKFLOW})"
-        git push origin master
+        git push origin main
