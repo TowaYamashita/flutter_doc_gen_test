@@ -11,8 +11,8 @@ jobs:
     timeout-minutes: 5
 
     steps:
-    # - name: Checkout the main repository
-    #   uses: actions/checkout@v2
+    - name: Checkout the main repository
+      uses: actions/checkout@v2
       # You need to set `with.fetch-depth` to 0 if you'll make diff in branches
       # with:
       #   fetch-depth: 0
