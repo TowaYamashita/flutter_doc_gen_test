@@ -13,28 +13,24 @@ jobs:
     steps:
     - name: Checkout the main repository
       uses: actions/checkout@v2
-    #   with:
-    #     persist-credentials: false
+      # You need to set `with.fetch-depth` to 0 if you'll make diff in branches
+      # with:
+      #   fetch-depth: 0
 
     - name: Checkout the wiki repository
       uses: actions/checkout@v2
       with:
-        repository: "${{github.repository}}.wiki"
+        repository: "${{ github.repository }}.wiki"
+        # As of Jul 2021, the default branch of a GitHub wiki is `master`, not `main`
         ref: master
         path: .wiki
-
-    - uses: actions/checkout@v2
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: '2.10.4'
-        channel: 'stable'
 
     - name: Generate the Wiki Page
       run: |
         flutter pub get
         flutter pub global activate dartdoc
         rm -rf .wiki && dartdoc lib/ --output .wiki/ --format md && mv .wiki/index.md .wiki/Home.md
-      
+
     - name: Configure the GitHub wiki identity
       working-directory: .wiki
       # "${GITHUB_ACTOR}@users.noreply.github.com" is associated to the actor without real emails
@@ -42,14 +38,13 @@ jobs:
         set -xe
         git config user.name  "[bot] ${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-    
+
     - name: Update the wiki page
       working-directory: .wiki
       # --allow-empty may be good enough for almost all the situations,
       # but maybe you want to do `if git commit ... ; then` if you don't want to record an empty commit
       run: |
         set -xe
-        git pull origin main
         git add .
         git commit --allow-empty -m "update the wiki page by bot (${GITHUB_WORKFLOW})"
-        git push origin main
+        git push origin master
