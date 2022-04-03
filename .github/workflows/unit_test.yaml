@@ -14,8 +14,8 @@ jobs:
     - name: Checkout the main repository
       uses: actions/checkout@v2
       # You need to set `with.fetch-depth` to 0 if you'll make diff in branches
-      # with:
-      #   fetch-depth: 0
+      with:
+        fetch-depth: 0
 
     - name: Checkout the wiki repository
       uses: actions/checkout@v2
@@ -25,7 +25,6 @@ jobs:
         ref: master
         path: .wiki
 
-    - uses: actions/checkout@v2
     - uses: subosito/flutter-action@v1
       with:
         flutter-version: '2.10.4'
