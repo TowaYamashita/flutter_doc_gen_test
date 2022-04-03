@@ -32,9 +32,10 @@ jobs:
 
     - name: Generate the Wiki Page
       run: |
+        set -xe
         flutter pub get
         flutter pub global activate dartdoc
-        ls .wiki | grep -v -E '.git' | xargs rm -r
+        ls -al .wiki | grep -v -E '.git' | xargs rm -r
         dartdoc lib/ --output .wiki/ --format md && mv .wiki/index.md .wiki/Home.md
 
     - name: Configure the GitHub wiki identity
